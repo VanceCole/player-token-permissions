@@ -1,13 +1,13 @@
 {
-  "name": "player-token-delete",
-  "title": "Player Token Delete",
-  "description": "Allows players to delete a token they have ownership of",
+  "name": "player-token-permissions",
+  "title": "Player Token Permissions Extended",
+  "description": "A module for FoundryVTT that expands player permissions for controlling tokens",
   "author": "Vance Cole",
   "version": "0.0.1",
   "minimumCoreVersion": "0.6.0",
   "compatibleCoreVersion": "0.6.4",
   "esmodules": [
-    "./player-token-delete.js"
+    "./js/player-token-delete.js"
   ],
   "socket": true
 }
