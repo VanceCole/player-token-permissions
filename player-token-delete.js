@@ -9,9 +9,15 @@ Hooks.on('ready', () => {
 
     // Tokens to be deleted
     let del = [];
+    // Get permission setting
+    let perm = game.settings.get('player-token-delete', 'permission-level');
+    // For each token, check if player has permissions to delete and add to array
     canvas.tokens.controlled.forEach(token => {
-      if (token.owner === true) del.push(token.id);
+      if(checkPermission(token)) del.push(token.id);
     });
+
+    let hover = canvas.tokens._hover;
+    if(checkPermission(hover)) del.push(hover.id);
 
     // Request GM user to delete tokens
     game.socket.emit('module.player-token-delete', { user: game.user.id, del, scene: canvas.scene.id});
@@ -19,16 +25,44 @@ Hooks.on('ready', () => {
   });
 })
 
-Hooks.on('init', () => {
+Hooks.once('init', () => {
+  // Register permission level setting
+  game.settings.register('player-token-delete', 'permission-level', {
+    name: 'Minimum permission to delete',
+    scope: 'world',
+    config: true,
+    type: String,
+    choices: {
+      "owner": "Owner",
+      "observer": "Observer",
+      "any": "Any"
+    },
+    default: "owner",
+  });
+
+  // Add socket listener for delete events
   game.socket.on('module.player-token-delete', (data) => {
     console.log(`PTD | Player ${data.user} requests delete tokens ${JSON.stringify(data.del)} from scene ${data.scene}`);
     const scene = game.scenes.find(scene => scene.id === data.scene);
     if (canvas.scene.id === data.scene) {
       data.del.forEach(id => {
-        canvas.tokens.placeables.find(token => token.id = id).delete();
+        let tk = canvas.tokens.placeables.find(token => token.id === id);
+        if (confirmPermission(id, data.user)) tk.delete();
       });
     } else {
       // emit error that gm must be on same scene
     }
   });
 });
+
+function checkPermission(token, player) {
+  let perm = game.settings.get('player-token-delete', 'permission-level');
+  if (perm === 'any') return true;
+  else if (perm === 'observer' && token.observer === true) return true;
+  else if (perm === 'owner' && token.owner === true) return true;
+  return false;
+}
+
+function confirmPermission(tokenId, playerId) {
+  return true;
+}
