@@ -1,4 +1,16 @@
-Hooks.on('ready', () => {
+import config from './config.js';
+
+Hooks.once('init', () => {
+  // Register settings
+  config.forEach((cfg) => {
+    game.settings.register('player-token-permissions', cfg.name, cfg.data);
+  });
+  // Add socket listener for delete events
+  game.socket.on('module.player-token-permissions', handleDelete);
+});
+
+Hooks.once('ready', () => {
+  // Add keyboard listener
   $(document).keydown((e) => {
     // Do not react if user is a GM
     if (game.user.isGM) return;
@@ -10,59 +22,53 @@ Hooks.on('ready', () => {
     // Tokens to be deleted
     let del = [];
     // Get permission setting
-    let perm = game.settings.get('player-token-delete', 'permission-level');
+    let perm = game.settings.get('player-token-permissions', 'delete');
     // For each token, check if player has permissions to delete and add to array
     canvas.tokens.controlled.forEach(token => {
       if(checkPermission(token)) del.push(token.id);
     });
 
     let hover = canvas.tokens._hover;
-    if(checkPermission(hover)) del.push(hover.id);
+    if(hover && checkPermission(hover) && !del.includes(hover.id)) {
+      del.push(hover.id);
+    }
 
     // Request GM user to delete tokens
-    game.socket.emit('module.player-token-delete', { user: game.user.id, del, scene: canvas.scene.id});
+    game.socket.emit('module.player-token-permissions', {
+      user: game.user.id,
+      scene: canvas.scene.id,
+      del
+    });
     console.log(`PTD | Requesting GM delete tokens ${JSON.stringify(del)} from scene ${canvas.scene.id}`);
   });
 })
 
-Hooks.once('init', () => {
-  // Register permission level setting
-  game.settings.register('player-token-delete', 'permission-level', {
-    name: 'Minimum permission to delete',
-    scope: 'world',
-    config: true,
-    type: String,
-    choices: {
-      "owner": "Owner",
-      "observer": "Observer",
-      "any": "Any"
-    },
-    default: "owner",
-  });
+function handleDelete(data) {
+  console.log(`Player Token Permissions | Player ${data.user} requests delete tokens ${JSON.stringify(data.del)} from scene ${data.scene}`);
 
-  // Add socket listener for delete events
-  game.socket.on('module.player-token-delete', (data) => {
-    console.log(`PTD | Player ${data.user} requests delete tokens ${JSON.stringify(data.del)} from scene ${data.scene}`);
-    const scene = game.scenes.find(scene => scene.id === data.scene);
-    if (canvas.scene.id === data.scene) {
-      data.del.forEach(id => {
-        let tk = canvas.tokens.placeables.find(token => token.id === id);
-        if (confirmPermission(id, data.user)) tk.delete();
-      });
-    } else {
-      // emit error that gm must be on same scene
-    }
-  });
-});
+  if (canvas.scene.id === data.scene) {
+    data.del.forEach(id => {
+      let tk = canvas.tokens.get(id);
+      if (confirmPermission(id, data.user)) tk.delete();
+    });
+  } else {
+    // emit error that gm must be on same scene
+  }
+}
 
+// Check if player has permission to request deletion
 function checkPermission(token, player) {
-  let perm = game.settings.get('player-token-delete', 'permission-level');
-  if (perm === 'any') return true;
-  else if (perm === 'observer' && token.observer === true) return true;
-  else if (perm === 'owner' && token.owner === true) return true;
+  let perm = game.settings.get('player-token-permissions', 'delete');
+  if (perm === '0') return true;
+  else if (perm === '1' && token.observer === true) return true;
+  else if (perm === '2' && token.limited === true) return true;
+  else if (perm === '3' && token.owner === true) return true;
+  // Todo: should display error
+  console.log(`PTD | You don't have permissions to delete this token`);
   return false;
 }
 
+// Confirm player has permission to request deletion
 function confirmPermission(tokenId, playerId) {
   return true;
 }
