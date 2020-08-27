@@ -1,14 +1,24 @@
 import { PTP } from './config.js';
 
 /**
- * @param {String} img        The image URL to apply
- * @param {Array}  tokens     Array of tokens to be assigned to
+ * Requests status effect be assigned to the given tokens
+ * - If user is GM, it will be assigned directly
+ * - Otherwise it will send socket request to a GM to do so
+ * @param {String}  img     The image URL to apply
+ * @param {Array}   tokens  Array of tokens to be assigned to
+ * @param {Boolean} large   false (default) = standard size, true = large overlay
+ * 
+ * @example
+ * requestStatus('icons/svg/fire.svg', ['<token-id>'], true);
  */
-export function setStatus(img, tokens, large = false) {
+export function requestStatus(img, tokens, large = false) {
   // If user is gm, just assign status effect directly
   if (game.user.isGM) {
     canvas.tokens.placeables.forEach(token => {
-      if (tokens.includes(token.id)) token.toggleEffect(img);
+      if (tokens.includes(token.id)) {
+        if (large) token.toggleOverlay(data.img);
+        else token.toggleEffect(data.img);
+      }
     });
   }
 

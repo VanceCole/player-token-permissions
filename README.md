@@ -6,14 +6,40 @@ A module for FoundryVTT that extends player permissions for controlling tokens:
 ## Delete Tokens
 - By default, players will be allowed to delete tokens they have ownership of by hovering and pressing Delete
 - You can optionally allow deletion of targetted tokens instead or in addition to hovered
-- Minimum token permission to delete is configurable by [Owned / Observer / Limited / Any]
+- By default players can only delete owned tokens, you can configure permissions to instead allow [Owned / Observer / Limited / Any]
 
 ## Status Effects
-- Allows you to create macros to assign status effects, example:
+- Allows you to create macros to toggle status effects
 
+Adds a requestStatus() function to the canvas.tokens object:
+```js
+/**
+ * Requests status effect be assigned to the given tokens
+ * - If user is GM, it will be assigned directly
+ * - Otherwise it will send socket request to a GM to do so
+ * @param {String}  img     The image URL to apply
+ * @param {Array}   tokens  Array of tokens to be assigned to
+ * @param {Boolean} large   false (default) = standard size, true = large overlay
+ * 
+ */
 ```
+
+# Example usage:
+
+```js
+// Sets fire icon condition for all selected icons
 let sel = canvas.tokens.controlled.map(t => t.id);
-canvas.tokens.ptpSetStatus('icons/svg/skull.svg', sel)
+canvas.tokens.requestStatus('icons/svg/fire.svg', sel);
+```
+```js
+// Sets net icon condition as overlay (large) for all selected icons
+let sel = canvas.tokens.controlled.map(t => t.id);
+canvas.tokens.requestStatus('icons/svg/net.svg', sel, true);
+```
+```js
+// Sets holy shield icon for character Steve's token
+let sel = canvas.tokens.placeables.find(t => t.name === 'Steve').id;
+canvas.tokens.requestStatus('icons/svg/holy-shield.svg', sel, true);
 ```
 
 ## Limitations

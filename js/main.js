@@ -1,6 +1,6 @@
 import { config, PTP } from './config.js';
 import { deleteToken, handleDelete } from './player-token-delete.js';
-import { setStatus, handleStatus } from './player-token-status.js';
+import { requestStatus, handleStatus } from './player-token-status.js';
 
 Hooks.once('init', () => {
   // Register settings
@@ -17,5 +17,5 @@ Hooks.once('init', () => {
 });
 
 Hooks.once('ready', () => {
-  canvas.tokens.ptpSetStatus = setStatus;
+  canvas.tokens.requestStatus = requestStatus;
 });
