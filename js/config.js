@@ -9,7 +9,7 @@ export const config = [
       scope: 'world',
       config: true,
       type: Number,
-      default: 1,
+      default: 2,
       choices: {
         1: 'Any Player',
         2: 'Trusted Players Only',
@@ -63,7 +63,7 @@ export const config = [
       scope: 'world',
       config: true,
       type: Number,
-      default: 1,
+      default: 2,
       choices: {
         1: 'Any Player',
         2: 'Trusted Players Only',

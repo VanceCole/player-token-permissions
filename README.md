@@ -7,6 +7,7 @@ A module for FoundryVTT that extends player permissions for controlling tokens:
 - By default, players will be allowed to delete tokens they have ownership of by hovering and pressing Delete
 - You can optionally allow deletion of targetted tokens instead or in addition to hovered
 - By default players can only delete owned tokens, you can configure permissions to instead allow [Owned / Observer / Limited / Any]
+- Configure to allow this ability for Trusted (default) or all players
 
 ## Toggle Status Effects
 - Allows you to create macros to toggle status effects
