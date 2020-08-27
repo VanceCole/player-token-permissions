@@ -17,5 +17,6 @@ Hooks.once('init', () => {
 });
 
 Hooks.once('ready', () => {
+  // Add method to tokens layer
   canvas.tokens.requestStatus = requestStatus;
 });

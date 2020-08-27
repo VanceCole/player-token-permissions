@@ -23,6 +23,7 @@ module.exports = {
     'linebreak-style': 'off',
     'no-mixed-operators': 'off',
     'no-param-reassign': 'off',
+    'brace-style': 'stroustrup',
   },
   globals: {
     AudioHelper: 'readonly',

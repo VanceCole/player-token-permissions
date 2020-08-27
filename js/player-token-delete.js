@@ -65,12 +65,14 @@ export function handleDelete(data) {
   // Do not react if player has less perms than min
   const user = game.users.get(data.user);
   if (user.role < game.settings.get(PTP, 'dPlayerType')) return;
-  // If GM is not on same scene, don't delete
+  // Make sure GM is on same scene
   if (canvas.scene.id === data.scene) {
     data.tokens.forEach((id) => {
       canvas.tokens.get(id).delete();
     });
-  } else {
+  }
+  // If GM not on same scene, display a warning
+  else {
     const usr = game.users.get(data.user);
     ui.notifications.warn(`${usr.name} requested deletion of [${data.tokens.length}] tokens but you are not on the same scene.`);
   }

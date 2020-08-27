@@ -1,23 +1,59 @@
 import { PTP } from './config.js';
 
+/*
+ * Check options and toggleEffect/Overlay as appropriate
+ */
+function setState(token, img, options) {
+  // Check whether overlay or regular effect requested
+  if (options.overlay) {
+    // If no state specified, just toggle
+    if (options.state === null) token.toggleOverlay(img);
+    // Forced state on
+    else if (options.state && token.data.overlayEffect !== img) {
+      token.toggleOverlay(img);
+    }
+    // Forced state off
+    else if (!options.state && token.data.overlayEffect === img) {
+      token.toggleOverlay(img);
+    }
+  } else {
+    // If no state specified, just toggle
+    if (options.state === null) token.toggleEffect(img);
+    // Forced state on
+    else if (options.state && !token.data.effects.includes(img)) {
+      token.toggleEffect(img);
+    }
+    // Forced state off
+    else if (!options.state && token.data.effects.includes(img)) {
+      token.toggleEffect(img);
+    }
+  }
+}
+
 /**
  * Requests status effect be assigned to the given tokens
  * - If user is GM, it will be assigned directly
  * - Otherwise it will send socket request to a GM to do so
- * @param {String}  img     The image URL to apply
- * @param {Array}   tokens  Array of tokens to be assigned to
- * @param {Boolean} [large] false = standard size (default), true = large overlay
- *
+ * @param {String}  img              The image URL to apply
+ * @param {Array}   tokens           Array of tokens to be assigned to
+ * @param {Object}  {options}        Configuration options which control how to assign
+ *                                     the status effect
+ * @param {Boolean} options.overlay  If true, will assign as larger overlay effect
+ * @param {Boolean} options.state    null = toggle, true = force on, false = force off
  * @example
- * requestStatus('icons/svg/fire.svg', ['<token-id>'], true);
+ * requestStatus('icons/svg/fire.svg', ['<token-id>'], { overlay: false, state: true });
  */
-export function requestStatus(img, tokens, large = false) {
+export function requestStatus(img, tokens, custom_options = {}) {
+  const options = mergeObject({
+    overlay: false,
+    state: null,
+  }, custom_options);
   // If user is gm, just assign status effect directly
   if (game.user.isGM) {
     canvas.tokens.placeables.forEach((token) => {
+      // Check if token is one requested
       if (tokens.includes(token.id)) {
-        if (large) token.toggleOverlay(img);
-        else token.toggleEffect(img);
+        setState(token, img, options);
       }
     });
   } else {
@@ -34,13 +70,16 @@ export function requestStatus(img, tokens, large = false) {
       scene: canvas.scene.id,
       img,
       tokens,
-      large,
+      options,
     });
     // eslint-disable-next-line no-console
     console.log(`${PTP} | Requesting GM set status ${img} for tokens ${JSON.stringify(tokens)} from scene ${canvas.scene.id}`);
   }
 }
 
+/*
+ * Handles incoming socket status effect request
+ */
 export function handleStatus(data) {
   // eslint-disable-next-line no-console
   console.log(`${PTP} | Player ${data.user} requests status ${data.img} for tokens ${JSON.stringify(data.tokens)} from scene ${data.scene}`);
@@ -51,8 +90,7 @@ export function handleStatus(data) {
   if (canvas.scene.id === data.scene) {
     canvas.tokens.placeables.forEach((token) => {
       if (data.tokens.includes(token.id)) {
-        if (data.large) token.toggleOverlay(data.img);
-        else token.toggleEffect(data.img);
+        setState(token, data.img, data.options);
       }
     });
   } else {
