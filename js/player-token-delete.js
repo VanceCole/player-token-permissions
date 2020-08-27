@@ -1,71 +1,61 @@
-import config from './config.js';
-const PTP = 'player-token-permissions';
-
-Hooks.on('ready', () => {
-  $('[data-tab=combat]')[0].click()
-})
-
-Hooks.once('init', () => {
-  // Register settings
-  config.forEach((cfg) => {
-    game.settings.register(PTP, cfg.name, cfg.data);
-  });
-  // Add socket listener for delete events
-  game.socket.on(`module.${PTP}`, handleDelete);
-  // Add delete listener
-  $(document).keydown(deleteToken);
-});
+import { PTP } from './config.js';
 
 /*
  * React to keyboard events and if delete requested, process and emit socket event
  */
-function deleteToken(e) {
+export function deleteToken(e) {
   // Only react on delete key
   if (e.which !== 46) return;
-  console.log(e);
   // Do not react if user is a GM
   if (game.user.isGM) return;
   // Do not react if player has less perms than min
-  if (game.user.role < game.settings.get(PTP, 'playerType')) return;
+  if (game.user.role < game.settings.get(PTP, 'dPlayerType')) return;
   // Only react if token layer is active
   if (ui.controls.activeControl !== 'token') return;
 
   // Tokens to be deleted
-  let del = [];
+  let tokens = [];
   
-  if (game.settings.get(PTP, 'hover')) {
+  if (game.settings.get(PTP, 'dHover')) {
     let hover = canvas.tokens._hover;
-    if(hover && checkPermission(hover) && !del.includes(hover.id)) {
-      del.push(hover.id);
+    if(hover && checkPermission(hover) && !tokens.includes(hover.id)) {
+      tokens.push(hover.id);
     }
   }
   
-  if (game.settings.get(PTP, 'target')) {
+  if (game.settings.get(PTP, 'dTarget')) {
     game.user.targets.forEach(token => {
-      if(checkPermission(token)) del.push(token.id);
+      if(checkPermission(token)) tokens.push(token.id);
     });
   }
 
-  if (!del.length) return;
+  if (!tokens.length) return;
   // Request GM user to delete tokens
   game.socket.emit('module.player-token-permissions', {
+    op: 'delete',
     user: game.user.id,
     scene: canvas.scene.id,
-    del
+    tokens
   });
-  console.log(`${PTP} | Requesting GM delete tokens ${JSON.stringify(del)} from scene ${canvas.scene.id}`);
+  console.log(`${PTP} | Requesting GM delete tokens ${JSON.stringify(tokens)} from scene ${canvas.scene.id}`);
 }
 
-function handleDelete(data) {
-  console.log(`${PTP} | Player ${data.user} requests delete tokens ${JSON.stringify(data.del)} from scene ${data.scene}`);
+/*
+ * Handles incoming socket delete request
+ */
+export function handleDelete(data) {
+  console.log(`${PTP} | Player ${data.user} requests delete tokens ${JSON.stringify(data.tokens)} from scene ${data.scene}`);
+  // Do not react if player has less perms than min
+  let user = game.users.get(data.user);
+  if (user.role < game.settings.get(PTP, 'dPlayerType')) return;
   // If GM is not on same scene, don't delete
   if (canvas.scene.id === data.scene) {
-    data.del.forEach(id => {
+    data.tokens.forEach(id => {
       canvas.tokens.get(id).delete();
     });
   } else {
     let usr = game.users.get(data.user);
-    ui.notifications.warn(`${usr.name} requested deletion of [${data.del.length}] tokens but you are not on the same scene.`);
+    ui.notifications.warn(`${usr.name} requested deletion of [${data.tokens.length}] tokens but you are not on the same scene.`);
   }
 }
 
@@ -73,7 +63,8 @@ function handleDelete(data) {
  * Checks if player has permissions to delete a token
  */
 function checkPermission(token, player) {
-  let perm = game.settings.get(PTP, 'delete');
+  // Check if user has appropriate ownership/etc of token to be deleted
+  let perm = game.settings.get(PTP, 'dPerm');
   if (perm === 0) return true;
   else if (perm === 1 && token.observer === true) return true;
   else if (perm === 2 && token.limited === true) return true;

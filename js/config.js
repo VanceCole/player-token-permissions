@@ -1,21 +1,23 @@
-export default [
+export const PTP = 'player-token-permissions';
+
+export const config = [
   {
-    name: 'playerType',
+    name: 'dPlayerType',
     data: {
-      name: 'Delete Enabled',
+      name: 'Delete Allowed For',
       hint: 'Which types of player should be allowed to delete?',
       scope: 'world',
       config: true,
       type: Number,
       default: 1,
       choices: {
-        0: "Any Player",
-        1: "Trusted Players Only",
+        1: "Any Player",
+        2: "Trusted Players Only",
       },
     },
   },
   {
-    name: 'delete',
+    name: 'dPerm',
     data: {
       name: 'Delete Minimum Permission',
       hint: 'Which tokens should players be allowed to delete?',
@@ -32,7 +34,7 @@ export default [
     },
   },
   {
-    name: 'hover',
+    name: 'dHover',
     data: {
       name: 'Enable Hover Delete',
       hint: 'Should hovered tokens be deleted?',
@@ -43,7 +45,7 @@ export default [
     },
   },
   {
-    name: 'target',
+    name: 'dTarget',
     data: {
       name: 'Enable Target Delete',
       hint: 'Should targetted tokens be deleted?',
@@ -51,6 +53,21 @@ export default [
       config: true,
       type: Boolean,
       default: false,
+    },
+  },
+  {
+    name: 'sPlayerType',
+    data: {
+      name: 'Assign Status Allowed For',
+      hint: 'Which types of player should be allowed to assign status effects?',
+      scope: 'world',
+      config: true,
+      type: Number,
+      default: 1,
+      choices: {
+        1: "Any Player",
+        2: "Trusted Players Only",
+      },
     },
   },
 ]
