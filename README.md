@@ -12,6 +12,7 @@ A module for FoundryVTT that extends player permissions for controlling tokens:
 ## Toggle Status Effects
 - Allows you to create macros to toggle status effects
 - Configure to allow this ability for Trusted (default) or all players
+- For convenience, this function will also work if you are a GM
 
 Adds a requestStatus() function to the canvas.tokens object:
 ```js
