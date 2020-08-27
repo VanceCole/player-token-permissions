@@ -6,7 +6,7 @@ import { PTP } from './config.js';
  * - Otherwise it will send socket request to a GM to do so
  * @param {String}  img     The image URL to apply
  * @param {Array}   tokens  Array of tokens to be assigned to
- * @param {Boolean} large   false (default) = standard size, true = large overlay
+ * @param {Boolean} [large] false = standard size (default), true = large overlay
  * 
  * @example
  * requestStatus('icons/svg/fire.svg', ['<token-id>'], true);

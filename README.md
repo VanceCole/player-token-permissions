@@ -19,7 +19,7 @@ Adds a requestStatus() function to the canvas.tokens object:
  * - Otherwise it will send socket request to a GM to do so
  * @param {String}  img     The image URL to apply
  * @param {Array}   tokens  Array of tokens to be assigned to
- * @param {Boolean} large   false (default) = standard size, true = large overlay
+ * @param {Boolean} [large] false (default) = standard size, true = large overlay
  * 
  */
 ```
@@ -39,7 +39,7 @@ canvas.tokens.requestStatus('icons/svg/net.svg', sel, true);
 ```js
 // Sets holy shield icon for character Steve's token
 let sel = canvas.tokens.placeables.find(t => t.name === 'Steve').id;
-canvas.tokens.requestStatus('icons/svg/holy-shield.svg', sel, true);
+canvas.tokens.requestStatus('icons/svg/holy-shield.svg', sel);
 ```
 
 ## Limitations
