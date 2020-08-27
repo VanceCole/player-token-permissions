@@ -11,8 +11,8 @@ export const config = [
       type: Number,
       default: 1,
       choices: {
-        1: "Any Player",
-        2: "Trusted Players Only",
+        1: 'Any Player',
+        2: 'Trusted Players Only',
       },
     },
   },
@@ -26,10 +26,10 @@ export const config = [
       type: Number,
       default: 3,
       choices: {
-        3: "Owner",
-        2: "Observer",
-        1: "Limited",
-        0: "Any"
+        3: 'Owner',
+        2: 'Observer',
+        1: 'Limited',
+        0: 'Any',
       },
     },
   },
@@ -65,9 +65,9 @@ export const config = [
       type: Number,
       default: 1,
       choices: {
-        1: "Any Player",
-        2: "Trusted Players Only",
+        1: 'Any Player',
+        2: 'Trusted Players Only',
       },
     },
   },
-]
+];

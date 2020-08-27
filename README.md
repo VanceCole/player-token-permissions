@@ -1,7 +1,7 @@
 # Player Token Permissions Extended
 A module for FoundryVTT that extends player permissions for controlling tokens:
 - Lets you allow players to delete tokens
-- Lets you create macros that assign or remove status effects to tokens
+- Lets you create macros toggle status / overlay effects to tokens
 
 ## Delete Tokens
 - By default, players will be allowed to delete tokens they have ownership of by hovering and pressing Delete
@@ -10,6 +10,7 @@ A module for FoundryVTT that extends player permissions for controlling tokens:
 
 ## Toggle Status Effects
 - Allows you to create macros to toggle status effects
+- Configure to allow this ability for Trusted (default) or all players
 
 Adds a requestStatus() function to the canvas.tokens object:
 ```js
@@ -23,7 +24,7 @@ Adds a requestStatus() function to the canvas.tokens object:
  */
 ```
 
-### Example usage:
+### Example macros:
 
 ```js
 // Sets fire icon condition for all selected icons
