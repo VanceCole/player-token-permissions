@@ -1,3 +1,4 @@
+/* eslint-disable no-lonely-if */
 import { PTP } from './config.js';
 
 /*
@@ -16,7 +17,9 @@ function setState(token, img, options) {
     else if (!options.state && token.data.overlayEffect === img) {
       token.toggleOverlay(img);
     }
-  } else {
+  }
+  // Regular effect
+  else {
     // If no state specified, just toggle
     if (options.state === null) token.toggleEffect(img);
     // Forced state on
@@ -56,7 +59,9 @@ export function requestStatus(img, tokens, custom_options = {}) {
         setState(token, img, options);
       }
     });
-  } else {
+  }
+  // User is not gm, request delete via socket
+  else {
     // Do not react if player has less perms than min
     if (game.user.role < game.settings.get(PTP, 'sPlayerType')) return;
     // Make sure at least one token given
@@ -86,14 +91,16 @@ export function handleStatus(data) {
   // Do not react if player has less perms than min
   const user = game.users.get(data.user);
   if (user.role < game.settings.get(PTP, 'sPlayerType')) return;
-  // If GM is not on same scene, don't react
+  // Make sure gm on same scene
   if (canvas.scene.id === data.scene) {
     canvas.tokens.placeables.forEach((token) => {
       if (data.tokens.includes(token.id)) {
         setState(token, data.img, data.options);
       }
     });
-  } else {
+  }
+  // GM is not on same scene, display warning
+  else {
     ui.notifications.warn(`${user.name} requested status effect for [${data.tokens.length}] tokens but you are not on the same scene.`);
   }
 }
