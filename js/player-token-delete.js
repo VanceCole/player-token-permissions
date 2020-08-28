@@ -21,6 +21,8 @@ function checkPermission(token) {
 export function deleteToken(e) {
   // Only react on delete key
   if (e.which !== 46) return;
+  // Do not react if game is not target
+  if(!e.target.classList.contains('game')) return;
   // Do not react if user is a GM
   if (game.user.isGM) return;
   // Do not react if player has less perms than min
