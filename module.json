@@ -3,7 +3,7 @@
   "title": "Player Token Permissions Extended",
   "description": "A module for FoundryVTT that extends player permissions for controlling tokens, allowing them to delete or set status effects",
   "author": "Vance Cole",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "minimumCoreVersion": "0.6.0",
   "compatibleCoreVersion": "0.6.6",
   "esmodules": [
@@ -14,5 +14,5 @@
   "manifest": "https://raw.githubusercontent.com/VanceCole/player-token-permissions/master/module.json",
   "readme": "https://github.com/VanceCole/player-token-permissions/blob/master/README.md",
   "changelog": "https://github.com/VanceCole/player-token-permissions/blob/master/changelog.md",
-  "download": "https://github.com/VanceCole/player-token-permissions/releases/download/0.0.1/player-token-permissions.zip"
+  "download": "https://github.com/VanceCole/player-token-permissions/releases/download/0.0.2/player-token-permissions.zip"
 }
