@@ -1,5 +1,6 @@
 /* eslint-disable no-lonely-if */
 import { PTP } from './config.js';
+import { gmActive } from './helpers.js';
 
 /*
  * Check options and toggleEffect/Overlay as appropriate
@@ -47,6 +48,10 @@ function setState(token, img, options) {
  * requestStatus('icons/svg/fire.svg', ['<token-id>'], { overlay: false, state: true });
  */
 export function requestStatus(img, tokens, custom_options = {}) {
+  if (!gmActive()) {
+    ui.notifications.warn(`Could not update [${tokens.length}] tokens because there is no GM connected.`);
+    return;
+  }
   const options = mergeObject({
     overlay: false,
     state: null,
@@ -102,5 +107,10 @@ export function handleStatus(data) {
   // GM is not on same scene, display warning
   else {
     ui.notifications.warn(`${user.name} requested status effect for [${data.tokens.length}] tokens but you are not on the same scene.`);
+    game.socket.emit('module.player-token-permissions', {
+      op: 'warn',
+      user: data.user,
+      msg: `Could not update [${data.tokens.length}] tokens because GM is not on the same scene.`,
+    });
   }
 }

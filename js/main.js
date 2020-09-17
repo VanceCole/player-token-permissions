@@ -1,6 +1,7 @@
 import { config, PTP } from './config.js';
-import { deleteToken, handleDelete } from './player-token-delete.js';
+import { requestDelete, handleDelete, deleteToken } from './player-token-delete.js';
 import { requestStatus, handleStatus } from './player-token-status.js';
+import { warn } from './helpers.js';
 
 Hooks.once('init', () => {
   // Register settings
@@ -10,7 +11,8 @@ Hooks.once('init', () => {
   // Add socket listener for delete events
   game.socket.on(`module.${PTP}`, (data) => {
     if (data.op === 'delete') handleDelete(data);
-    if (data.op === 'status') handleStatus(data);
+    else if (data.op === 'status') handleStatus(data);
+    else if (data.op === 'warn') warn(data);
   });
   // Add delete listener
   $(document).keydown(deleteToken);
@@ -19,4 +21,5 @@ Hooks.once('init', () => {
 Hooks.once('ready', () => {
   // Add method to tokens layer
   canvas.tokens.requestStatus = requestStatus;
+  canvas.tokens.requestDelete = requestDelete;
 });

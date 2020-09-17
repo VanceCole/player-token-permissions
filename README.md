@@ -9,6 +9,12 @@ A module for FoundryVTT that extends player permissions for controlling tokens:
 - By default players can only delete owned tokens, you can configure permissions to instead allow [Owned / Observer / Limited / Any]
 - Configure to allow this ability for Trusted (default) or all players
 
+### Example macro
+```js
+let sel = game.user.targets.ids;
+canvas.tokens.requestDelete(sel);
+```
+
 ## Toggle Status Effects
 - Allows you to create macros to toggle status effects
 - Configure to allow this ability for Trusted (default) or all players
