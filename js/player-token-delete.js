@@ -35,7 +35,7 @@ export function requestDelete(ids) {
   if (game.user.role < game.settings.get(PTP, 'dPlayerType')) return;
   // If user is gm, just delete directly
   if (game.user.isGM) {
-    canvas.tokens.deleteMany(tokens);
+    canvas.scene.deleteEmbeddedDocuments('Token', tokens);
   }
   // If not gm, request deletion via socket
   else {
@@ -96,9 +96,7 @@ export function handleDelete(data) {
 
   // Make sure GM is on same scene
   if (canvas.scene.id === data.scene) {
-    data.tokens.forEach((id) => {
-      canvas.tokens.get(id).delete();
-    });
+    canvas.scene.deleteEmbeddedDocuments('Token', data.tokens);
   }
   // If GM not on same scene, display a warning
   else {
