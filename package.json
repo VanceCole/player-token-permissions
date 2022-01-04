@@ -1,8 +1,8 @@
 {
-  "name": "player-token-permissions",
+  "name": "allow-players-to-delete-their-tokens",
   "version": "0.0.2",
   "description": "A module for FoundryVTT that extends player permissions for controlling tokens",
-  "main": "js/main.js",
+  "main": "js/aptdtt.js",
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^10.1.0",
@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VanceCole/player-token-permissions.git"
+    "url": "git+https://github.com/VanceCole/allow-players-to-delete-their-tokens.git"
   },
   "author": "Vance Cole",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/VanceCole/player-token-permissions/issues"
+    "url": "https://github.com/VanceCole/allow-players-to-delete-their-tokens/issues"
   },
-  "homepage": "https://github.com/VanceCole/player-token-permissions#readme"
+  "homepage": "https://github.com/VanceCole/allow-players-to-delete-their-tokens#readme"
 }

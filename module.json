@@ -1,18 +1,18 @@
 {
-  "name": "player-token-permissions",
-  "title": "Player Token Permissions Extended",
-  "description": "A module for FoundryVTT that extends player permissions for controlling tokens, allowing them to delete or set status effects",
-  "author": "Vance Cole",
-  "version": "0.0.4",
-  "minimumCoreVersion": "0.8.9",
+  "name": "allow-players-to-delete-their-tokens",
+  "title": "Allow Players to Delete Their Tokens",
+  "description": "Allows players to delete their selected tokens while a GM is logged in",
+  "author": "shem",
+  "version": "0.1.0",
+  "minimumCoreVersion": "9",
   "compatibleCoreVersion": "9",
   "esmodules": [
-    "./js/main.js"
+    "./js/aptdtt.js"
   ],
   "socket": true,
-  "url": "https://github.com/VanceCole/player-token-permissions",
-  "manifest": "https://raw.githubusercontent.com/VanceCole/player-token-permissions/master/module.json",
-  "readme": "https://github.com/VanceCole/player-token-permissions/blob/master/README.md",
-  "changelog": "https://github.com/VanceCole/player-token-permissions/blob/master/changelog.md",
-  "download": "https://github.com/VanceCole/player-token-permissions/releases/download/0.0.3/player-token-permissions.zip"
+  "url": "https://github.com/itamarcu/allow-players-to-delete-their-tokens",
+  "manifest": "https://raw.githubusercontent.com/itamarcu/allow-players-to-delete-their-tokens/master/module.json",
+  "readme": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/blob/master/README.md",
+  "changelog": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/blob/master/changelog.md",
+  "download": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/releases/download/0.1.0/allow-players-to-delete-their-tokens.zip"
 }
