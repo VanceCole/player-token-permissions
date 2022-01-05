@@ -7,7 +7,7 @@
 
 # Allow Players to Delete Their Tokens
 
-Based on Player Token Permissions Extended, but simplified a lot.
+Based on [Player Token Permissions Extended](https://github.com/VanceCole/player-token-permissions/), but simplified a lot.
 
 - Lets players delete tokens they have selected by pressing the regular delete key
 - At least 1 GM player must be connected
