@@ -2,17 +2,28 @@
   "name": "allow-players-to-delete-their-tokens",
   "title": "Allow Players to Delete Their Tokens",
   "description": "Allows players to delete their selected tokens while a GM is logged in",
-  "author": "shem",
   "version": "0.1.0",
   "minimumCoreVersion": "9",
   "compatibleCoreVersion": "9",
   "esmodules": [
-    "./js/aptdtt.js"
+    "./scripts/aptdtt.js"
   ],
   "socket": true,
   "url": "https://github.com/itamarcu/allow-players-to-delete-their-tokens",
-  "manifest": "https://raw.githubusercontent.com/itamarcu/allow-players-to-delete-their-tokens/master/module.json",
-  "readme": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/blob/master/README.md",
-  "changelog": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/blob/master/changelog.md",
-  "download": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/releases/download/0.1.0/allow-players-to-delete-their-tokens.zip"
+  "manifest": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/raw/master/module.json",
+  "download": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/archive/master.zip",
+  "readme": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/blob/master/Readme.md",
+  "bugs": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/issues",
+  "license": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/blob/master/License.txt",
+  "changelog": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/blob/master/Changelog.md",
+  "authors": [
+    {
+      "name": "shem",
+      "email": "itamarcu+foundry@gmail.com",
+      "discord": "shem#0226",
+      "reddit": "u/Shemetz"
+    }
+  ],
+  "manifestPlusVersion": "1.2.0"
 }
+
