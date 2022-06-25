@@ -1,10 +1,16 @@
 {
   "name": "allow-players-to-delete-their-tokens",
+  "id": "allow-players-to-delete-their-tokens",
   "title": "Allow Players to Delete Their Tokens",
   "description": "Allows players to delete their selected tokens while a GM is logged in",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "9",
+  "compatibleCoreVersion": "10",
+  "compatibility": {
+    "minimum": "9",
+    "verified": "10",
+    "maximum": "13"
+  },
   "esmodules": [
     "./scripts/aptdtt.js"
   ],

@@ -14,3 +14,5 @@ Based on [Player Token Permissions Extended](https://github.com/VanceCole/player
 
 (note:  unlike the original PTP module, the token needs to be selected (not hovered/targeted), and
 deleting tokens on other scenes is fine)
+
+### Note - Foundry V10 might have a bug/feature that invalidates this module - see https://github.com/foundryvtt/foundryvtt/issues/7765
