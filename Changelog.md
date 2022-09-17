@@ -20,6 +20,6 @@ See https://github.com/foundryvtt/foundryvtt/issues/7765
 
 ## See also: [Unreleased]
 
-[Unreleased]: https://github.com/shemetz/allow-players-to-delete-their-tokens/compare/0.1.0...HEAD
 [0.1.0]: https://github.com/shemetz/allow-players-to-delete-their-tokens/compare/0.0.3...0.1.0
 [0.2.1]: https://github.com/shemetz/allow-players-to-delete-their-tokens/compare/0.1.0...0.2.1
+[Unreleased]: https://github.com/shemetz/allow-players-to-delete-their-tokens/compare/0.1.0...HEAD
