@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is loosely based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+##  [0.2.2] - 2022-09-17
+- V10 is out and this module is now obsolete.  Hurray!
+- Added UI notification about V10 deprecation
+- Changed module to not function in V10
+
 ##  [0.2.1] - 2022-08-06
 - V10 compatibility
 - Note:  currently V10 isn't out yet and it includes a bug that accidentally implements this module.
@@ -22,4 +27,5 @@ See https://github.com/foundryvtt/foundryvtt/issues/7765
 
 [0.1.0]: https://github.com/shemetz/allow-players-to-delete-their-tokens/compare/0.0.3...0.1.0
 [0.2.1]: https://github.com/shemetz/allow-players-to-delete-their-tokens/compare/0.1.0...0.2.1
-[Unreleased]: https://github.com/shemetz/allow-players-to-delete-their-tokens/compare/0.1.0...HEAD
+[0.2.2]: https://github.com/shemetz/allow-players-to-delete-their-tokens/compare/0.2.1...0.2.2
+[Unreleased]: https://github.com/shemetz/allow-players-to-delete-their-tokens/compare/0.2.2...HEAD
