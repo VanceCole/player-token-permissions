@@ -7,7 +7,8 @@
 
 # Allow Players to Delete Their Tokens
 
-Based on [Player Token Permissions Extended](https://github.com/VanceCole/player-token-permissions/), but simplified a lot.
+Based on [Player Token Permissions Extended](https://github.com/VanceCole/player-token-permissions/), but simplified a
+lot.
 
 - Lets players delete tokens they have selected by pressing the regular delete key
 - At least 1 GM player must be connected
@@ -16,8 +17,9 @@ Based on [Player Token Permissions Extended](https://github.com/VanceCole/player
 (note:  unlike the original PTPE module, the token needs to be selected (not hovered/targeted), and
 deleting tokens on other scenes is fine)
 
-# Note - This module is unnecessary as of Foundry V10!
+# Note - This module is obsolete and unnecessary as of Foundry V10!
 
-Now Foundry includes a built-in permission to delete tokens.  It doesn't have a confirmation message but it's close enough.
+Now Foundry includes a built-in permission to delete tokens. It doesn't have a confirmation message but it's close
+enough.
 
 ![](metadata/v10_screenshot.png)
