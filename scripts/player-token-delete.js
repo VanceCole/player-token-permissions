@@ -13,44 +13,44 @@ function gmActive() {
  * requestDelete(['<token-id>']);
  */
 export function requestDelete(ids) {
-  const tokens = (typeof ids === 'string') ? [ids] : ids;
-  if (!tokens.length) return;
+  const tokenIds = (typeof ids === 'string') ? [ids] : ids;
+  if (!tokenIds.length) return;
   if (!gmActive()) {
-    ui.notifications.warn(`Could not delete [${tokens.length}] tokens because there is no GM connected.`);
+    const pluralS = tokenIds.length === 1 ? '' : 's';
+    ui.notifications.warn(`Could not delete ${tokenIds.length} token${pluralS} because there is no GM connected.`);
     return;
   }
-  // If user is gm, just delete directly
   if (game.user.isGM) {
-    canvas.scene.deleteEmbeddedDocuments('Token', tokens);
+    // If user is gm, just delete directly
+    canvas.scene.deleteEmbeddedDocuments('Token', tokenIds);
+    return;
+  }
+  // If not gm, request deletion via socket, after confirmation
+  const emitViaSocket = () => {
+    // Request GM user to delete tokens
+    game.socket.emit(`module.${APTDTT}`, {
+      op: 'delete',
+      user: game.user.id,
+      scene: canvas.scene.id,
+      tokens: tokenIds,
+    });
+    // eslint-disable-next-line no-console
+    console.log(`${APTDTT} | Requesting GM delete tokens ${JSON.stringify(tokenIds)} from scene ${canvas.scene.id}`);
+  };
+  if (game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.SHIFT)) {
+    emitViaSocket();
   }
   else {
-    // If not gm, request deletion via socket, after confirmation
-    const emitViaSocket = () => {
-      // Request GM user to delete tokens
-      game.socket.emit(`module.${APTDTT}`, {
-        op: 'delete',
-        user: game.user.id,
-        scene: canvas.scene.id,
-        tokens,
-      });
-      // eslint-disable-next-line no-console
-      console.log(`${APTDTT} | Requesting GM delete tokens ${JSON.stringify(tokens)} from scene ${canvas.scene.id}`);
-    };
-    if (game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.SHIFT)) {
-      emitViaSocket();
-    }
-    else {
-      promptConfirmation(tokens, emitViaSocket);
-    }
+    promptConfirmation(tokenIds, emitViaSocket);
   }
 }
 
-const promptConfirmation = (tokens, emitViaSocket) => {
-  const pluralS = tokens.length === 1 ? '' : 's';
+const promptConfirmation = (tokenIds, emitViaSocket) => {
+  const pluralS = tokenIds.length === 1 ? '' : 's';
   new Dialog({
-    title: `Delete your tokens?`,
+    title: `Delete your token${pluralS}?`,
     content: `<p>Are you sure you want to delete your token${pluralS}?</p>
-<p>Token name${pluralS}: ${tokens.map(t => t.name)
+<p>Token name${pluralS}: ${tokenIds.map(tId => canvas.tokens.get(tId)?.name)
       .join(', ')}</p>
 <p>(You can hold Shift to skip this confirmation prompt)</p>`,
     buttons: {
