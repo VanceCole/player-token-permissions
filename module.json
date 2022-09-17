@@ -15,18 +15,18 @@
     "./scripts/allow-players-to-delete-their-tokens.js"
   ],
   "socket": true,
-  "url": "https://github.com/itamarcu/allow-players-to-delete-their-tokens",
-  "manifest": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/raw/master/module.json",
-  "download": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/archive/master.zip",
-  "readme": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/blob/master/Readme.md",
-  "bugs": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/issues",
-  "license": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/blob/master/License.txt",
-  "changelog": "https://github.com/itamarcu/allow-players-to-delete-their-tokens/blob/master/Changelog.md",
+  "url": "https://github.com/shemetz/allow-players-to-delete-their-tokens",
+  "manifest": "https://github.com/shemetz/allow-players-to-delete-their-tokens/raw/master/module.json",
+  "download": "https://github.com/shemetz/allow-players-to-delete-their-tokens/archive/master.zip",
+  "readme": "https://github.com/shemetz/allow-players-to-delete-their-tokens/blob/master/Readme.md",
+  "bugs": "https://github.com/shemetz/allow-players-to-delete-their-tokens/issues",
+  "license": "https://github.com/shemetz/allow-players-to-delete-their-tokens/blob/master/License.txt",
+  "changelog": "https://github.com/shemetz/allow-players-to-delete-their-tokens/blob/master/Changelog.md",
   "authors": [
     {
-      "name": "shem",
+      "name": "shemetz",
       "email": "itamarcu+foundry@gmail.com",
-      "discord": "shem#0226",
+      "discord": "shemetz#0226",
       "reddit": "u/Shemetz"
     }
   ],
