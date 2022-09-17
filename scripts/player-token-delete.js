@@ -1,7 +1,7 @@
-import { APTDTT } from './aptdtt.js';
+import { APTDTT } from './aptdtt.js'
 
-function gmActive() {
-  return (!!game.users.filter((u) => u.active && u.isGM).length);
+function gmActive () {
+  return (!!game.users.filter((u) => u.active && u.isGM).length)
 }
 
 /**
@@ -12,18 +12,18 @@ function gmActive() {
  * @example
  * requestDelete(['<token-id>']);
  */
-export function requestDelete(ids) {
-  const tokenIds = (typeof ids === 'string') ? [ids] : ids;
-  if (!tokenIds.length) return;
+export function requestDelete (ids) {
+  const tokenIds = (typeof ids === 'string') ? [ids] : ids
+  if (!tokenIds.length) return
   if (!gmActive()) {
-    const pluralS = tokenIds.length === 1 ? '' : 's';
-    ui.notifications.warn(`Could not delete ${tokenIds.length} token${pluralS} because there is no GM connected.`);
-    return;
+    const pluralS = tokenIds.length === 1 ? '' : 's'
+    ui.notifications.warn(`Could not delete ${tokenIds.length} token${pluralS} because there is no GM connected.`)
+    return
   }
   if (game.user.isGM) {
     // If user is gm, just delete directly
-    canvas.scene.deleteEmbeddedDocuments('Token', tokenIds);
-    return;
+    canvas.scene.deleteEmbeddedDocuments('Token', tokenIds)
+    return
   }
   // If not gm, request deletion via socket, after confirmation
   const emitViaSocket = () => {
@@ -33,20 +33,20 @@ export function requestDelete(ids) {
       user: game.user.id,
       scene: canvas.scene.id,
       tokens: tokenIds,
-    });
+    })
     // eslint-disable-next-line no-console
-    console.log(`${APTDTT} | Requesting GM delete tokens ${JSON.stringify(tokenIds)} from scene ${canvas.scene.id}`);
-  };
+    console.log(`${APTDTT} | Requesting GM delete tokens ${JSON.stringify(tokenIds)} from scene ${canvas.scene.id}`)
+  }
   if (game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.SHIFT)) {
-    emitViaSocket();
+    emitViaSocket()
   }
   else {
-    promptConfirmation(tokenIds, emitViaSocket);
+    promptConfirmation(tokenIds, emitViaSocket)
   }
 }
 
 const promptConfirmation = (tokenIds, emitViaSocket) => {
-  const pluralS = tokenIds.length === 1 ? '' : 's';
+  const pluralS = tokenIds.length === 1 ? '' : 's'
   new Dialog({
     title: `Delete your token${pluralS}?`,
     content: `<p>Are you sure you want to delete your token${pluralS}?</p>
@@ -66,35 +66,35 @@ const promptConfirmation = (tokenIds, emitViaSocket) => {
       },
     },
     default: 'ok',
-  }).render(true);
-};
+  }).render(true)
+}
 
 /*
  * React to keyboard events and if delete requested, process and emit socket event
  */
-export function possiblyDeleteTokens(e) {
+export function possiblyDeleteTokens (e) {
   // Only react on delete key
-  if (e.which !== 46) return;
+  if (e.which !== 46) return
   // Do not react if game is not target
-  if (!e.target.tagName === 'BODY') return;
+  if (!e.target.tagName === 'BODY') return
   // Only react if token layer is active
-  if (ui.controls.activeControl !== 'token') return;
+  if (ui.controls.activeControl !== 'token') return
   // Do not react if user is a GM
-  if (game.user.isGM) return;
+  if (game.user.isGM) return
 
   // Tokens to be deleted - controlled tokens
-  const tokens = canvas.tokens.controlled;
+  const tokens = canvas.tokens.controlled
 
-  if (!tokens.length) return;
-  requestDelete(tokens.map(t => t.id));
+  if (!tokens.length) return
+  requestDelete(tokens.map(t => t.id))
 }
 
 /*
  * Handles incoming socket delete request
  */
-export function handleDelete(data) {
+export function handleDelete (data) {
   // eslint-disable-next-line no-console
-  console.log(`${APTDTT} | Player ${data.user} requests delete tokens ${JSON.stringify(data.tokens)} from scene ${data.scene}`);
-  const scene = game.scenes.get(data.scene);
-  scene.deleteEmbeddedDocuments('Token', data.tokens);
+  console.log(`${APTDTT} | Player ${data.user} requests delete tokens ${JSON.stringify(data.tokens)} from scene ${data.scene}`)
+  const scene = game.scenes.get(data.scene)
+  scene.deleteEmbeddedDocuments('Token', data.tokens)
 }
