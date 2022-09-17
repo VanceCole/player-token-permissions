@@ -1,10 +1,10 @@
 import { requestDelete, handleDelete, possiblyDeleteTokens } from './player-token-delete.js'
 
-export const APTDTT = 'allow-players-to-delete-their-tokens'
+export const APTDTTModuleId = 'allow-players-to-delete-their-tokens'
 
 Hooks.once('init', () => {
   // Add socket listener for delete events
-  game.socket.on(`module.${APTDTT}`, (data) => {
+  game.socket.on(`module.${APTDTTModuleId}`, (data) => {
     if (data.op === 'delete') {
       handleDelete(data)
     }

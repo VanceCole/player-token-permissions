@@ -12,7 +12,7 @@
     "maximum": "13"
   },
   "esmodules": [
-    "./scripts/aptdtt.js"
+    "./scripts/allow-players-to-delete-their-tokens.js"
   ],
   "socket": true,
   "url": "https://github.com/itamarcu/allow-players-to-delete-their-tokens",

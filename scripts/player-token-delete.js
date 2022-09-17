@@ -1,4 +1,4 @@
-import { APTDTT } from './aptdtt.js'
+import { APTDTTModuleId } from './allow-players-to-delete-their-tokens.js'
 
 function gmActive () {
   return (!!game.users.filter((u) => u.active && u.isGM).length)
@@ -28,14 +28,14 @@ export function requestDelete (ids) {
   // If not gm, request deletion via socket, after confirmation
   const emitViaSocket = () => {
     // Request GM user to delete tokens
-    game.socket.emit(`module.${APTDTT}`, {
+    game.socket.emit(`module.${APTDTTModuleId}`, {
       op: 'delete',
       user: game.user.id,
       scene: canvas.scene.id,
       tokens: tokenIds,
     })
     // eslint-disable-next-line no-console
-    console.log(`${APTDTT} | Requesting GM delete tokens ${JSON.stringify(tokenIds)} from scene ${canvas.scene.id}`)
+    console.log(`${APTDTTModuleId} | Requesting GM delete tokens ${JSON.stringify(tokenIds)} from scene ${canvas.scene.id}`)
   }
   if (game.keyboard.isModifierActive(KeyboardManager.MODIFIER_KEYS.SHIFT)) {
     emitViaSocket()
@@ -94,7 +94,7 @@ export function possiblyDeleteTokens (e) {
  */
 export function handleDelete (data) {
   // eslint-disable-next-line no-console
-  console.log(`${APTDTT} | Player ${data.user} requests delete tokens ${JSON.stringify(data.tokens)} from scene ${data.scene}`)
+  console.log(`${APTDTTModuleId} | Player ${data.user} requests delete tokens ${JSON.stringify(data.tokens)} from scene ${data.scene}`)
   const scene = game.scenes.get(data.scene)
   scene.deleteEmbeddedDocuments('Token', data.tokens)
 }
